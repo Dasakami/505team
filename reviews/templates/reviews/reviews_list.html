@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзывы клиентов - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Отзывы наших клиентов</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Что говорят о нашей работе те, кто уже воспользовался нашими услугами
+            </p>
+            <div class="mt-8">
+                <a href="{% url 'add_review' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Оставить отзыв
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for review in page_obj %}
+            <div class="bg-gray-800 rounded-xl p-8 card-hover">
+                <!-- Rating -->
+                <div class="flex mb-6">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                        <i class="fas fa-star text-yellow-400 text-lg"></i>
+                        {% else %}
+                        <i class="fas fa-star text-gray-600 text-lg"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <!-- Review Title -->
+                <h3 class="text-xl font-bold mb-4 text-primary">{{ review.title }}</h3>
+
+                <!-- Review Text -->
+                <blockquote class="text-gray-300 mb-6 italic leading-relaxed">
+                    "{{ review.text }}"
+                </blockquote>
+
+                <!-- Service Used -->
+                {% if review.service_used %}
+                <div class="mb-4">
+                    <span class="text-sm bg-primary/20 text-primary px-3 py-1 rounded-full">{{ review.service_used }}</span>
+                </div>
+                {% endif %}
+
+                <!-- Recommendation -->
+                {% if review.would_recommend %}
+                <div class="mb-6 flex items-center text-green-400">
+                    <i class="fas fa-thumbs-up mr-2"></i>
+                    <span class="text-sm">Рекомендует нас</span>
+                </div>
+                {% endif %}
+
+                <!-- Client Info -->
+                <div class="flex items-center">
+                    {% if review.avatar %}
+                    <img src="{{ review.avatar.url }}" alt="{{ review.name }}" class="w-12 h-12 rounded-full mr-4 object-cover">
+                    {% else %}
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mr-4">
+                        <span class="text-white font-semibold text-lg">{{ review.name.0 }}</span>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h4 class="font-semibold text-white">{{ review.name }}</h4>
+                        {% if review.company %}
+                        <p class="text-sm text-gray-400">{{ review.company }}</p>
+                        {% endif %}
+                        <p class="text-xs text-gray-500">{{ review.created_at|date:"d.m.Y" }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-12">
+            <nav class="flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="px-4 py-2 bg-primary text-white rounded-lg font-semibold">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+
+        {% if not page_obj %}
+        <div class="text-center py-20">
+            <div class="text-6xl text-gray-600 mb-4">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-400 mb-4">Пока нет отзывов</h3>
+            <p class="text-gray-500 mb-8">Станьте первым, кто оставит отзыв о нашей работе!</p>
+            <a href="{% url 'add_review' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                Оставить отзыв
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

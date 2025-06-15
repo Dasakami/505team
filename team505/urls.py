@@ -12,6 +12,8 @@ urlpatterns = [
     path('portfolio/', include('portfolio.urls')),
     path('team/', include('team.urls')),
     path('blog/', include('blog.urls')),
+    path('reviews/', include('reviews.urls')),
+    path('fun/', include('fun.urls')),
 ]
 
 if settings.DEBUG:

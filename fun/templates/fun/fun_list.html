@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block title %}Смешно - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Смешные моменты</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Забавные дубли, неудачные кадры и просто веселые моменты из нашей работы 😄
+            </p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <a href="{% url 'fun_list' %}" class="px-6 py-3 rounded-lg font-semibold transition-colors {% if active_type == 'all' %}bg-primary text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+                <i class="fas fa-th mr-2"></i>Все
+            </a>
+            <a href="{% url 'fun_list' %}?type=image" class="px-6 py-3 rounded-lg font-semibold transition-colors {% if active_type == 'image' %}bg-primary text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+                <i class="fas fa-image mr-2"></i>Фото
+            </a>
+            <a href="{% url 'fun_list' %}?type=video" class="px-6 py-3 rounded-lg font-semibold transition-colors {% if active_type == 'video' %}bg-primary text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+                <i class="fas fa-video mr-2"></i>Видео
+            </a>
+            <a href="{% url 'fun_list' %}?type=gif" class="px-6 py-3 rounded-lg font-semibold transition-colors {% if active_type == 'gif' %}bg-primary text-white{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+                <i class="fas fa-film mr-2"></i>GIF
+            </a>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for content in page_obj %}
+            <div class="bg-gray-800 rounded-xl overflow-hidden card-hover group cursor-pointer" onclick="openModal({{ content.id }})">
+                <div class="relative">
+                    {% if content.content_type == 'video' %}
+                        {% if content.video %}
+                            <video class="w-full h-48 object-cover" muted>
+                                <source src="{{ content.video.url }}" type="video/mp4">
+                            </video>
+                        {% else %}
+                            <div class="w-full h-48 bg-gray-700 flex items-center justify-center">
+                                <i class="fas fa-video text-4xl text-gray-500"></i>
+                            </div>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-play-circle text-4xl text-white"></i>
+                        </div>
+                    {% elif content.content_type == 'gif' %}
+                        {% if content.image %}
+                            <img src="{{ content.image.url }}" alt="{{ content.title }}" class="w-full h-48 object-cover">
+                        {% else %}
+                            <div class="w-full h-48 bg-gray-700 flex items-center justify-center">
+                                <i class="fas fa-film text-4xl text-gray-500"></i>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {% if content.image %}
+                            <img src="{{ content.image.url }}" alt="{{ content.title }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        {% else %}
+                            <div class="w-full h-48 bg-gray-700 flex items-center justify-center">
+                                <i class="fas fa-image text-4xl text-gray-500"></i>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    
+                    <!-- Content type badge -->
+                    <div class="absolute top-2 right-2">
+                        {% if content.content_type == 'video' %}
+                            <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-video mr-1"></i>Видео
+                            </span>
+                        {% elif content.content_type == 'gif' %}
+                            <span class="bg-purple-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-film mr-1"></i>GIF
+                            </span>
+                        {% else %}
+                            <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-image mr-1"></i>Фото
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Featured badge -->
+                    {% if content.is_featured %}
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-secondary text-white px-2 py-1 rounded-full text-xs">
+                            <i class="fas fa-star mr-1"></i>Топ
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="p-4">
+                    <h3 class="font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">{{ content.title }}</h3>
+                    {% if content.description %}
+                    <p class="text-gray-400 text-sm mb-3 line-clamp-2">{{ content.description }}</p>
+                    {% endif %}
+                    
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div class="flex items-center">
+                            <i class="fas fa-eye mr-1"></i>
+                            {{ content.views_count }}
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-heart mr-1"></i>
+                            {{ content.likes_count }}
+                        </div>
+                        <span>{{ content.created_at|date:"d.m.Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-12">
+            <nav class="flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if active_type != 'all' %}&type={{ active_type }}{% endif %}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="px-4 py-2 bg-primary text-white rounded-lg font-semibold">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}{% if active_type != 'all' %}&type={{ active_type }}{% endif %}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if active_type != 'all' %}&type={{ active_type }}{% endif %}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+
+        {% if not page_obj %}
+        <div class="text-center py-20">
+            <div class="text-6xl text-gray-600 mb-4">
+                <i class="fas fa-laugh"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-400 mb-4">Пока нет смешного контента</h3>
+            <p class="text-gray-500">Скоро здесь появятся забавные моменты из нашей работы!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Modal for content viewing -->
+<div id="contentModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-xl max-w-4xl w-full max-h-full overflow-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modalTitle" class="text-2xl font-bold"></h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modalContent" class="mb-4">
+                <!-- Content will be loaded here -->
+            </div>
+            <div id="modalDescription" class="text-gray-300 mb-4"></div>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button onclick="likeContent()" id="likeBtn" class="flex items-center text-gray-400 hover:text-red-400 transition-colors">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span id="likesCount">0</span>
+                    </button>
+                    <div class="flex items-center text-gray-400">
+                        <i class="fas fa-eye mr-2"></i>
+                        <span id="viewsCount">0</span>
+                    </div>
+                </div>
+                <div id="modalDate" class="text-gray-500 text-sm"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentContentId = null;
+
+function openModal(contentId) {
+    currentContentId = contentId;
+
+    fetch(`/fun/${contentId}/json/`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDescription').textContent = data.description || '';
+            document.getElementById('likesCount').textContent = data.likes;
+            document.getElementById('viewsCount').textContent = data.views;
+            document.getElementById('modalDate').textContent = data.created_at;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = '';
+
+            if (data.type === 'video' && data.video_url) {
+                modalContent.innerHTML = `
+                    <video class="w-full rounded-xl" controls autoplay>
+                        <source src="${data.video_url}" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>`;
+            } else if (data.image_url) {
+                modalContent.innerHTML = `
+                    <img src="${data.image_url}" class="w-full rounded-xl" alt="Контент">`;
+            } else {
+                modalContent.innerHTML = `<p class="text-gray-400">Нет контента</p>`;
+            }
+
+            document.getElementById('contentModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+}
+
+function closeModal() {
+    document.getElementById('contentModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+    currentContentId = null;
+}
+
+function likeContent() {
+    if (!currentContentId) return;
+
+    fetch(`/fun/${currentContentId}/like/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.likes) {
+            document.getElementById('likesCount').textContent = data.likes;
+        }
+    });
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+document.getElementById('contentModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+</script>
+
+{% endblock %}
