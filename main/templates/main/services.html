@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Услуги - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Наши услуги</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Полный спектр креативных услуг для развития вашего бизнеса. От мобилографии до разработки приложений.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+            <div class="bg-gray-800 rounded-xl p-8 card-hover group">
+                <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-{{ service.icon }} text-2xl text-white"></i>
+                </div>
+                
+                <h3 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">{{ service.name }}</h3>
+                <p class="text-gray-400 mb-6 leading-relaxed">{{ service.description }}</p>
+                
+                {% if service.price_from %}
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-2xl font-bold gradient-text">от {{ service.price_from }} ₽</span>
+                </div>
+                {% endif %}
+                
+                <a href="{% url 'service_detail' service.id %}" class="inline-flex items-center text-primary hover:text-secondary transition-colors font-semibold">
+                    Подробнее
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-20 text-center bg-gray-850 rounded-2xl p-12">
+            <h2 class="text-3xl font-bold mb-6">Не нашли нужную услугу?</h2>
+            <p class="text-xl text-gray-400 mb-8">Мы всегда готовы обсудить индивидуальные проекты и нестандартные задачи</p>
+            <a href="{% url 'contact' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                Обсудить проект
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзывы - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Отзывы клиентов</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Что говорят о нашей работе те, кто уже воспользовался нашими услугами
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for testimonial in testimonials %}
+            <div class="bg-gray-800 rounded-xl p-8 card-hover">
+                <!-- Rating -->
+                <div class="flex mb-6">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= testimonial.rating %}
+                        <i class="fas fa-star text-yellow-400 text-lg"></i>
+                        {% else %}
+                        <i class="fas fa-star text-gray-600 text-lg"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <!-- Review Text -->
+                <blockquote class="text-gray-300 mb-6 italic leading-relaxed">
+                    "{{ testimonial.text }}"
+                </blockquote>
+
+                <!-- Client Info -->
+                <div class="flex items-center">
+                    {% if testimonial.client_avatar %}
+                    <img src="{{ testimonial.client_avatar.url }}" alt="{{ testimonial.client_name }}" class="w-12 h-12 rounded-full mr-4 object-cover">
+                    {% else %}
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mr-4">
+                        <span class="text-white font-semibold text-lg">{{ testimonial.client_name.0 }}</span>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h4 class="font-semibold text-white">{{ testimonial.client_name }}</h4>
+                        {% if testimonial.client_company %}
+                        <p class="text-sm text-gray-400">{{ testimonial.client_company }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-20 text-center bg-gray-850 rounded-2xl p-12">
+            <h2 class="text-3xl font-bold mb-6">Хотите стать нашим следующим довольным клиентом?</h2>
+            <p class="text-xl text-gray-400 mb-8">Мы готовы воплотить ваши идеи в жизнь</p>
+            <a href="{% url 'contact' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                Начать проект
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

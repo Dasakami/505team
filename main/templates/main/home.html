@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-orange-900/20"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-10"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="animate-float">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="gradient-text">Команда 505</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Мы создаем креативные решения для вашего бизнеса. От мобилографии до разработки сайтов — воплощаем ваши идеи в жизнь.
+            </p>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <a href="{% url 'portfolio' %}" class="gradient-bg px-8 py-4 rounded-lg text-white font-semibold hover:opacity-90 transition-opacity">
+                Посмотреть портфолио
+            </a>
+            <a href="{% url 'contact' %}" class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors">
+                Связаться с нами
+            </a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-3xl font-bold gradient-text">100+</div>
+                <div class="text-gray-400">Проектов</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold gradient-text">50+</div>
+                <div class="text-gray-400">Клиентов</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold gradient-text">3+</div>
+                <div class="text-gray-400">Года опыта</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold gradient-text">8</div>
+                <div class="text-gray-400">Услуг</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-20 bg-gray-850">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">
+                <span class="gradient-text">Наши услуги</span>
+            </h2>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Полный спектр креативных услуг для развития вашего бизнеса
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+            <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-{{ service.icon }} text-xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">{{ service.name }}</h3>
+                <p class="text-gray-400 mb-4">{{ service.short_description }}</p>
+                {% if service.price_from %}
+                <div class="text-primary font-semibold mb-4">от {{ service.price_from }} ₽</div>
+                {% endif %}
+                <a href="{% url 'service_detail' service.id %}" class="text-primary hover:text-secondary transition-colors">
+                    Подробнее →
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'services' %}" class="inline-block bg-primary hover:bg-purple-700 px-8 py-3 rounded-lg font-semibold transition-colors">
+                Все услуги
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Preview -->
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="gradient-text">Кто мы такие?</span>
+                </h2>
+                <p class="text-lg text-gray-300 mb-6">
+                    Мы — команда молодых креативных специалистов, которые объединились под брендом "505". Наша цель — создавать качественный контент и эффективные решения для развития вашего бизнеса.
+                </p>
+                <p class="text-lg text-gray-300 mb-8">
+                    Каждый проект мы выполняем с душой, вкладывая в него максимум творчества и профессионализма. Мы не просто делаем работу — мы создаем искусство.
+                </p>
+                <a href="{% url 'about' %}" class="inline-block gradient-bg px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Узнать больше
+                </a>
+            </div>
+            <div class="relative">
+                <div class="bg-gradient-to-br from-primary to-secondary rounded-2xl p-8 text-center">
+                    <div class="text-6xl font-bold text-white mb-4">505</div>
+                    <div class="text-xl text-white">Креативная команда</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+{% if testimonials %}
+<section class="py-20 bg-gray-850">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">
+                <span class="gradient-text">Отзывы клиентов</span>
+            </h2>
+            <p class="text-xl text-gray-400">Что говорят о нас наши клиенты</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for testimonial in testimonials %}
+            <div class="bg-gray-800 rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    {% if testimonial.client_avatar %}
+                    <img src="{{ testimonial.client_avatar.url }}" alt="{{ testimonial.client_name }}" class="w-12 h-12 rounded-full mr-4">
+                    {% else %}
+                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                        <span class="text-white font-semibold">{{ testimonial.client_name.0 }}</span>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h4 class="font-semibold">{{ testimonial.client_name }}</h4>
+                        {% if testimonial.client_company %}
+                        <p class="text-sm text-gray-400">{{ testimonial.client_company }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= testimonial.rating %}
+                        <i class="fas fa-star text-yellow-400"></i>
+                        {% else %}
+                        <i class="fas fa-star text-gray-600"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <p class="text-gray-300">{{ testimonial.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'testimonials' %}" class="inline-block text-primary hover:text-secondary transition-colors">
+                Все отзывы →
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-6">
+            <span class="gradient-text">Готовы начать проект?</span>
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+            Свяжитесь с нами сегодня, и мы обсудим, как можем помочь вашему бизнесу
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'contact' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                Связаться сейчас
+            </a>
+            <a href="{% url 'portfolio' %}" class="border-2 border-gray-600 hover:border-primary px-8 py-4 rounded-lg font-semibold transition-colors">
+                Посмотреть работы
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

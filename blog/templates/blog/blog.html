@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Блог - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Блог команды 505</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Полезные статьи о дизайне, разработке, маркетинге и креативных решениях
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in page_obj %}
+            <article class="bg-gray-800 rounded-xl overflow-hidden card-hover group">
+                <div class="relative overflow-hidden">
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">{{ post.created_at|date:"d.m.Y" }}</span>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <h2 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                        <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
+                    </h2>
+                    
+                    <p class="text-gray-400 mb-4 line-clamp-3">{{ post.excerpt }}</p>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">
+                            <i class="fas fa-user mr-1"></i>
+                            {{ post.author }}
+                        </span>
+                        <span class="text-sm text-gray-500">
+                            <i class="fas fa-clock mr-1"></i>
+                            {{ post.created_at|date:"d M" }}
+                        </span>
+                    </div>
+                    
+                    {% if post.tags %}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tag in post.get_tags_list %}
+                        <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">#{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <a href="{% url 'blog_detail' post.slug %}" class="inline-flex items-center text-primary hover:text-secondary transition-colors font-semibold">
+                        Читать далее
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-12">
+            <nav class="flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="px-4 py-2 bg-primary text-white rounded-lg font-semibold">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+
+        {% if not page_obj %}
+        <div class="text-center py-20">
+            <div class="text-6xl text-gray-600 mb-4">
+                <i class="fas fa-blog"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-400 mb-4">Пока нет статей</h3>
+            <p class="text-gray-500">Скоро здесь появятся интересные материалы!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

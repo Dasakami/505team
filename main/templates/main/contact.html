@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Контакты - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Свяжитесь с нами</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Готовы обсудить ваш проект? Мы всегда рады новым интересным задачам
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="bg-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6">Отправить сообщение</h2>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="mb-6 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-600/20 text-green-400 border border-green-600/30{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">Имя</label>
+                            {{ form.name }}
+                        </div>
+                        <div>
+                            <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">Телефон</label>
+                            {{ form.phone }}
+                        </div>
+                        <div>
+                            <label for="{{ form.service.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">Услуга</label>
+                            {{ form.service }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.message.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">Сообщение</label>
+                        {{ form.message }}
+                    </div>
+                    
+                    <button type="submit" class="w-full gradient-bg py-3 px-6 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                        Отправить сообщение
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="space-y-8">
+                <div class="bg-gray-800 rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold mb-6">Контактная информация</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Email</h3>
+                                <p class="text-gray-400">info@team505.ru</p>
+                                <p class="text-gray-400">orders@team505.ru</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Телефон</h3>
+                                <p class="text-gray-400">+996 (705) 777 891 </p>
+                                <p class="text-gray-400">+996 (705) 777 891 </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mr-4">
+                                <i class="fab fa-telegram text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Telegram</h3>
+                                <p class="text-gray-400">@team505</p>
+                                <a href="https://t.me/team505" class="text-primary hover:text-secondary transition-colors">Написать в Telegram</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fab fa-whatsapp text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">WhatsApp</h3>
+                                <p class="text-gray-400">+996 (705) 777 891 </p>
+                                <a href="https://wa.me/996705777891" class="text-primary hover:text-secondary transition-colors">Написать в WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="bg-gray-800 rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold mb-6">Мы в соцсетях</h2>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="#" class="flex items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fab fa-instagram text-pink-400 text-2xl mr-3"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="#" class="flex items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fab fa-vk text-blue-400 text-2xl mr-3"></i>
+                            <span>VKontakte</span>
+                        </a>
+                        <a href="#" class="flex items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fab fa-youtube text-red-400 text-2xl mr-3"></i>
+                            <span>YouTube</span>
+                        </a>
+                        <a href="#" class="flex items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fab fa-behance text-blue-400 text-2xl mr-3"></i>
+                            <span>Behance</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Work Hours -->
+                <div class="bg-gray-800 rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold mb-6">Время работы</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Понедельник - Пятница</span>
+                            <span>7:00  - 00:00 (24:00)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Суббота</span>
+                            <span>9:00 - 22:00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Воскресенье</span>
+                            <span class="text-gray-500">Выходной</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-primary/20 rounded-lg border border-primary/30">
+                        <p class="text-sm text-primary">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Срочные вопросы обсуждаем круглосуточно в Telegram
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Custom form styles */
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    background-color: #374151;
+    border: 1px solid #4B5563;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    color: white;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 1px #8B5CF6;
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder {
+    color: #9CA3AF;
+}
+</style>
+{% endblock %}

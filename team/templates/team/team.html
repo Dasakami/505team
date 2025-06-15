@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Команда - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Наша команда</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                Познакомьтесь с талантливыми специалистами, которые воплощают ваши идеи в жизнь
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for member in members %}
+            <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                <div class="relative">
+                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="flex gap-2 justify-center">
+                                {% if member.telegram %}
+                                <a href="https://t.me/{{ member.telegram }}" class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                    <i class="fab fa-telegram text-white"></i>
+                                </a>
+                                {% endif %}
+                                {% if member.instagram %}
+                                <a href="https://instagram.com/{{ member.instagram }}" class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
+                                    <i class="fab fa-instagram text-white"></i>
+                                </a>
+                                {% endif %}
+                                {% if member.vk %}
+                                <a href="https://vk.com/{{ member.vk }}" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                                    <i class="fab fa-vk text-white"></i>
+                                </a>
+                                {% endif %}
+                                {% if member.email %}
+                                <a href="mailto:{{ member.email }}" class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{{ member.name }}</h3>
+                    <p class="text-primary font-semibold mb-3">{{ member.position }}</p>
+                    
+                    <p class="text-gray-400 mb-4 line-clamp-3">{{ member.bio }}</p>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">Опыт: {{ member.experience_years }} {{ member.experience_years|pluralize:"год,года,лет" }}</span>
+                    </div>
+                    
+                    {% if member.skills %}
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        {% for skill in member.get_skills_list %}
+                        <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <a href="{% url 'member_detail' member.slug %}" class="w-full gradient-bg py-3 px-6 rounded-lg font-semibold hover:opacity-90 transition-opacity text-center block">
+                        Подробнее
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not members %}
+        <div class="text-center py-20">
+            <div class="text-6xl text-gray-600 mb-4">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-400 mb-4">Команда формируется</h3>
+            <p class="text-gray-500">Скоро здесь появится информация о наших специалистах</p>
+        </div>
+        {% endif %}
+
+        <!-- Join Team CTA -->
+        <div class="mt-20 text-center bg-gray-850 rounded-2xl p-12">
+            <h2 class="text-3xl font-bold mb-6">Хочешь присоединиться к команде?</h2>
+            <p class="text-xl text-gray-400 mb-8">Мы всегда ищем талантливых и креативных людей</p>
+            <a href="{% url 'contact' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                Написать нам
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.name }} - Команда 505{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-{{ service.icon }} text-3xl text-white"></i>
+            </div>
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">{{ service.name }}</span>
+            </h1>
+            {% if service.price_from %}
+            <div class="text-2xl font-bold text-primary mb-4">от {{ service.price_from }} ₽</div>
+            {% endif %}
+        </div>
+
+        <!-- Description -->
+        <div class="bg-gray-800 rounded-2xl p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6">Описание услуги</h2>
+            <div class="text-lg text-gray-300 leading-relaxed">
+                {{ service.description|linebreaks }}
+            </div>
+        </div>
+
+        <!-- What's Included -->
+        <div class="bg-gray-850 rounded-2xl p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6">Что входит в услугу</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start">
+                    <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                    <span class="text-gray-300">Консультация и планирование</span>
+                </div>
+                <div class="flex items-start">
+                    <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                    <span class="text-gray-300">Профессиональное выполнение</span>
+                </div>
+                <div class="flex items-start">
+                    <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                    <span class="text-gray-300">Правки и доработки</span>
+                </div>
+                <div class="flex items-start">
+                    <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                    <span class="text-gray-300">Поддержка после сдачи</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold mb-6">Готовы заказать {{ service.name|lower }}?</h2>
+            <p class="text-xl text-gray-400 mb-8">Свяжитесь с нами для обсуждения деталей проекта</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'contact' %}" class="gradient-bg px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Заказать услугу
+                </a>
+                <a href="{% url 'portfolio' %}" class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors">
+                    Посмотреть примеры
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

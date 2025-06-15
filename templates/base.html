@@ -1,0 +1,181 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Команда 505 - Креативные решения для вашего бизнеса{% endblock %}</title>
+    <meta name="description" content="{% block description %}Креативная команда 505 предлагает услуги мобилографии, SMM, таргетинга, дрон-съёмки, создания сайтов и мобильных приложений{% endblock %}">
+    <link rel="icon" href="{% static 'vendor/img/favicon.ico' %}" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#F97316',
+                        dark: '#0F172A',
+                        gray: {
+                            850: '#1E293B',
+                            900: '#0F172A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #8B5CF6 0%, #F97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #8B5CF6 0%, #F97316 100%);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'home' %}" class="text-2xl font-bold gradient-text">505</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="{% url 'home' %}" class="hover:text-primary transition-colors">Главная</a>
+                        <a href="{% url 'about' %}" class="hover:text-primary transition-colors">О нас</a>
+                        <a href="{% url 'services' %}" class="hover:text-primary transition-colors">Услуги</a>
+                        <a href="{% url 'portfolio' %}" class="hover:text-primary transition-colors">Портфолио</a>
+                        <a href="{% url 'team' %}" class="hover:text-primary transition-colors">Команда</a>
+                        <a href="{% url 'blog' %}" class="hover:text-primary transition-colors">Блог</a>
+                        <a href="{% url 'contact' %}" class="bg-primary hover:bg-purple-700 px-4 py-2 rounded-lg transition-colors">Контакты</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button bg-gray-800 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800">
+                <a href="{% url 'home' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">Главная</a>
+                <a href="{% url 'about' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">О нас</a>
+                <a href="{% url 'services' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">Услуги</a>
+                <a href="{% url 'portfolio' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">Портфолио</a>
+                <a href="{% url 'team' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">Команда</a>
+                <a href="{% url 'blog' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">Блог</a>
+                <a href="{% url 'contact' %}" class="block px-3 py-2 text-base font-medium hover:text-primary">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold gradient-text mb-4">Команда 505</h3>
+                    <p class="text-gray-400 mb-4">Мы создаем креативные решения для вашего бизнеса. Наша команда молодых специалистов готова воплотить любые ваши идеи в реальность.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-telegram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-vk text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Навигация</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'home' %}" class="text-gray-400 hover:text-primary">Главная</a></li>
+                        <li><a href="{% url 'about' %}" class="text-gray-400 hover:text-primary">О нас</a></li>
+                        <li><a href="{% url 'services' %}" class="text-gray-400 hover:text-primary">Услуги</a></li>
+                        <li><a href="{% url 'portfolio' %}" class="text-gray-400 hover:text-primary">Портфолио</a></li>
+                        <li><a href="{% url 'team' %}" class="text-gray-400 hover:text-primary">Команда</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i> info@team505.ru</li>
+                        <li><i class="fas fa-phone mr-2"></i> +996 (705) 777 891</li>
+                        <li><i class="fab fa-telegram mr-2"></i> @team505</li>
+                        <li><i class="fab fa-whatsapp mr-2"></i> +996 (705) 777 891 </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Команда 505. Все права защищены.</p>
+                <p class="text-gray-500 mt-2 italic">Сделано с душой. Команда 505.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
