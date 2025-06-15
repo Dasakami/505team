@@ -111,20 +111,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
@@ -135,6 +121,24 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '146839736689131',
     'API_SECRET': 'A271rHvOdWxMmOwMLDkTXagm3OE',
 }
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+ # это куда Django будет копировать статику
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
