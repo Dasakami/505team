@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}Блог - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Читайте свежие статьи от команды 505: о маркетинге, дизайне, разработке, SMM и бизнесе. Всё, что нужно современному бренду.">
+    <meta name="keywords" content="блог Команда 505, digital, статьи, бизнес, SMM, мобилография, сайты, таргетинг, Кыргызстан, креатив">
+    
+    <meta property="og:title" content="Блог — Команда 505">
+    <meta property="og:description" content="Лучшие статьи о digital-мире, маркетинге и дизайне от нашей команды.">
+    <meta property="og:image" content="{% static 'vendor/img/blog-preview.jpg' %}">
+    <meta property="og:url" content="https://505team.site/blog/">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Блог — Команда 505">
+    <meta name="twitter:description" content="Читайте свежие статьи и новости от нашей команды.">
+    <meta name="twitter:image" content="{% static 'vendor/img/blog-preview.jpg' %}">
+
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

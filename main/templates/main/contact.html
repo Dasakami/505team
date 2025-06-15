@@ -2,6 +2,16 @@
 {% load crispy_forms_tags %}
 
 {% block title %}Контакты - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Свяжитесь с командой 505 для сотрудничества, консультаций и обсуждения проектов. Мы доступны в Telegram, WhatsApp, по телефону и почте.">
+    <meta name="keywords" content="контакты Команда 505, связь, заказать услугу, сотрудничество, Telegram, WhatsApp, email, обратная связь">
+    <meta property="og:title" content="Свяжитесь с нами — Команда 505">
+    <meta property="og:description" content="Открыты к диалогу: напишите нам, и мы поможем вам реализовать вашу идею.">
+    <meta property="og:image" content="{% static 'vendor/img/contact-preview.jpg' %}">
+    <meta property="og:url" content="https://505team.site/contact/">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

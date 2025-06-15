@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}Портфолио - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Портфолио Команды 505 — реальные кейсы в сфере дизайна, разработки, маркетинга и брендинга. Результаты, которые говорят сами за себя.">
+    <meta name="keywords" content="портфолио Команда 505, кейсы, дизайн, сайты, брендинг, маркетинг, реклама, проекты, Кыргызстан, креативное агентство">
+
+    <meta property="og:title" content="Портфолио — Команда 505">
+    <meta property="og:description" content="Наши лучшие работы: сайты, бренды, визуалы, маркетинговые кампании.">
+    <meta property="og:image" content="{% static 'vendor/img/portfolio-cover.jpg' %}">
+    <meta property="og:url" content="https://505team.site/portfolio/">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Портфолио — Команда 505">
+    <meta name="twitter:description" content="Смотри, на что мы способны. Дизайн. Код. Креатив.">
+    <meta name="twitter:image" content="{% static 'vendor/img/portfolio-cover.jpg' %}">
+
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

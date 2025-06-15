@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}Команда - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Наша команда — это эксперты в области дизайна, разработки, маркетинга и стратегии. Узнайте больше о специалистах Команды 505.">
+    <meta name="keywords" content="Команда 505, специалисты, команда, эксперты, разработка, дизайн, маркетинг, digital-команда, Кыргызстан, портфолио, услуги, веб-разработка">
+
+    <meta property="og:title" content="Наша команда — Команда 505">
+    <meta property="og:description" content="Познакомьтесь с профессионалами Команды 505 — дизайн, разработка, маркетинг.">
+    <meta property="og:image" content="{{ STATIC_URL }}img/team-preview.jpg"> {# Замени путь на настоящий или добавь default картинку #}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Наша команда — Команда 505">
+    <meta name="twitter:description" content="Мы собрали лучших — узнай больше о специалистах Команды 505.">
+    <meta name="twitter:image" content="{{ STATIC_URL }}img/team-preview.jpg">
+
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

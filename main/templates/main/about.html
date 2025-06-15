@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}О нас - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Команда 505 — это молодые креативщики, разработчики, дизайнеры и маркетологи, объединённые одной целью: делать бизнес клиента заметным, стильным и успешным.">
+    <meta name="keywords" content="о команде 505, кто мы, креативщики Кыргызстан, дизайн, разработка, таргетинг, история команды">
+    <meta property="og:title" content="О нас — Команда 505">
+    <meta property="og:description" content="Мы не просто команда — мы сообщество людей, которые любят своё дело. Познакомьтесь с нашими ценностями и историей.">
+    <meta property="og:image" content="{% static 'vendor/img/about-preview.jpg' %}">
+    <meta property="og:url" content="https://505team.site/about/">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

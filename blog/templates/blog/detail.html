@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ post.title }} - Блог - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="{{ post.excerpt|truncatechars:160 }}">
+    <meta name="keywords" content="Команда 505, блог, {{ post.title }}, digital, маркетинг, креатив, разработки, статьи, Кыргызстан">
+    
+    <meta property="og:title" content="{{ post.title }} — Блог Команды 505">
+    <meta property="og:description" content="{{ post.excerpt|truncatechars:160 }}">
+    <meta property="og:image" content="{{ post.image.url }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="article">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ post.title }}">
+    <meta name="twitter:description" content="{{ post.excerpt|truncatechars:160 }}">
+    <meta name="twitter:image" content="{{ post.image.url }}">
+    <meta name="author" content="{{ post.author }}">
+
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <article class="py-20">

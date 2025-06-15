@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}Отзывы - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Реальные отзывы клиентов Команды 505. Что говорят о нашей работе бизнесы и предприниматели Кыргызстана.">
+    <meta name="keywords" content="отзывы Команда 505, мнения клиентов, доверие, кейсы, довольные клиенты, репутация, успех">
+    <meta property="og:title" content="Отзывы о нас — Команда 505 глазами клиентов">
+    <meta property="og:description" content="Довольные клиенты — лучший показатель качества. Читайте, что говорят о нашей работе.">
+    <meta property="og:image" content="{% static 'vendor/img/testimonials-preview.jpg' %}">
+    <meta property="og:url" content="https://505team.site/testimonials/">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

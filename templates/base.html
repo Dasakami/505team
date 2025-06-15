@@ -7,9 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Команда 505 - Креативные решения для вашего бизнеса{% endblock %}</title>
-    <meta name="description" content="{% block description %}Креативная команда 505 предлагает услуги мобилографии, SMM, таргетинга, дрон-съёмки, создания сайтов и мобильных приложений{% endblock %}">
+    {% block seo %}
+    <meta name="robots" content="index, follow">
+<meta name="keywords" content="Команда 505, SMM, мобилография, дрон съемка, таргет, разработка сайта, мобильные приложения, креативное агентство, Бишкек, маркетинг">
+<meta name="author" content="Команда 505">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://505team.site/">
+<meta property="og:title" content="{% block og_title %}Команда 505 - Креативные решения для вашего бизнеса{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Мобилография, SMM, таргетинг, дрон-съёмка, создание сайтов и приложений от команды 505{% endblock %}">
+<meta property="og:image" content="{% static 'vendor/img/preview.jpg' %}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twitter_title %}Команда 505 - Креативные решения для вашего бизнеса{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}Команда 505 - дрон-съемка, SMM, таргет, сайты, креатив{% endblock %}">
+<meta name="twitter:image" content="{% static 'vendor/img/preview.jpg' %}">
+
+    {% endblock %}
     <link rel="icon" href="{% static 'vendor/img/favicon.ico' %}" type="image/x-icon">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>bvb
     <script>
         tailwind.config = {
             theme: {

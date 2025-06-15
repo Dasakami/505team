@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}Услуги - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="Услуги Команды 505: от разработки сайтов и мобильных приложений до SMM-продвижения, таргета, фото- и видеосъёмки с дрона. Всё, чтобы ваш бизнес рос и выделялся.">
+    <meta name="keywords" content="услуги Команда 505, SMM, создание сайтов, приложения, мобилография, дрон съёмка, маркетинг Бишкек">
+    <meta property="og:title" content="Услуги — Всё для роста вашего бренда | Команда 505">
+    <meta property="og:description" content="Цифровые и креативные решения под ключ. Узнайте, что мы можем предложить вашему бизнесу.">
+    <meta property="og:image" content="{% static 'vendor/img/services-preview.jpg' %}">
+    <meta property="og:url" content="https://505team.site/services/">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

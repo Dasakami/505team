@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
+{% block seo %}
+    <meta name="description" content="Команда 505 — молодое креативное агентство из Кыргызстана. Мы создаём сайты, продвигаем бизнесы через SMM и таргет, снимаем фото и видео, а также разрабатываем мобильные приложения.">
+    <meta name="keywords" content="Команда 505, SMM Бишкек, создание сайтов, дрон-съёмка, мобилография, таргетинг, креативное агентство Кыргызстан">
+    <meta property="og:title" content="Команда 505 — Креативное агентство нового поколения">
+    <meta property="og:description" content="Мы помогаем брендам становиться заметными. Современные сайты, таргет, мобилография, приложения и продвижение — всё в одном месте.">
+    <meta property="og:image" content="{% static 'vendor/img/preview.jpg' %}">
+    <meta property="og:url" content="https://505team.site/">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+{% endblock %}
+
 
 {% block content %}
 <!-- Hero Section -->

@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ member.name }} - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="{{ member.name }} — {{ member.position }} в Команде 505. Опыт {{ member.experience_years }} {{ member.experience_years|pluralize:"год,года,лет" }}. {{ member.bio|truncatechars:150 }}">
+    <meta name="keywords" content="{{ member.name }}, {{ member.position }}, Команда 505, специалист, проект, digital команда, портфолио, сотрудничество, услуги, разработка, дизайн, Кыргызстан">
+
+    <meta property="og:title" content="{{ member.name }} — {{ member.position }} в Команде 505">
+    <meta property="og:description" content="{{ member.bio|truncatechars:150 }}">
+    <meta property="og:image" content="{{ member.photo.url }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="profile">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ member.name }} — Команда 505">
+    <meta name="twitter:description" content="{{ member.bio|truncatechars:150 }}">
+    <meta name="twitter:image" content="{{ member.photo.url }}">
+
+    <meta name="author" content="{{ member.name }}">
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">

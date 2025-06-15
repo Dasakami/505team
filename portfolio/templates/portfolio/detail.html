@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ item.title }} - Портфолио - Команда 505{% endblock %}
+{% block seo %}
+    <meta name="description" content="{{ item.description|truncatechars:160 }}">
+    <meta name="keywords" content="портфолио, проект {{ item.title }}, Команда 505, дизайн, разработка, кейс, брендинг, технологии, Кыргызстан">
+
+    <meta property="og:title" content="{{ item.title }} — Проект Команды 505">
+    <meta property="og:description" content="{{ item.description|truncatechars:160 }}">
+    <meta property="og:image" content="{{ item.image.url }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="article">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ item.title }}">
+    <meta name="twitter:description" content="{{ item.description|truncatechars:160 }}">
+    <meta name="twitter:image" content="{{ item.image.url }}">
+
+    <meta name="author" content="Команда 505">
+    <meta name="robots" content="index, follow">
+{% endblock %}
 
 {% block content %}
 <section class="py-20">
@@ -56,7 +74,7 @@
                         <div>
                             <span class="text-gray-400">Технологии:</span>
                             <div class="flex flex-wrap gap-2 mt-2">
-                                {% for tech in item.technologies|split:"," %}
+                                {% for tech in item.technologies %}
                                 <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm">{{ tech.strip }}</span>
                                 {% endfor %}
                             </div>
