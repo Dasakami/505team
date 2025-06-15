@@ -4,6 +4,7 @@ from .models import Service, Testimonial, ContactMessage
 from .forms import ContactForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.core.management import call_command
 
 def home(request):
     services = Service.objects.filter(is_active=True)[:6]
@@ -48,3 +49,7 @@ def create_superuser(request):
     else:
         return HttpResponse("Суперпользователь уже существует.")
     
+
+def run_collectstatic(request):
+    call_command('collectstatic', interactive=False, clear=True)
+    return HttpResponse("Collectstatic выполнен!")
