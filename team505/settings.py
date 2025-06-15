@@ -11,6 +11,8 @@ SECRET_KEY = 'django-insecure-your-secret-key-here'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
+APPEND_SLASH = True
 
 # Application definition
 INSTALLED_APPS = [
@@ -113,8 +115,9 @@ USE_TZ = True
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
+
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
 
 
 CLOUDINARY_STORAGE = {
