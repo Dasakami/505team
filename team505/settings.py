@@ -113,7 +113,8 @@ USE_TZ = True
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 
 
 CLOUDINARY_STORAGE = {
