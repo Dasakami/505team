@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Service, Testimonial, ContactMessage
 from .forms import ContactForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 def home(request):
     services = Service.objects.filter(is_active=True)[:6]
@@ -38,3 +40,11 @@ def contact(request):
     
     services = Service.objects.filter(is_active=True)
     return render(request, 'main/contact.html', {'form': form, 'services': services})
+
+def create_superuser(request):
+    if not User.objects.filter(username="Dasakami").exists():
+        User.objects.create_superuser("Dasakami", "dendasakami@gmail.com", "h72ivh-19")
+        return HttpResponse("Суперпользователь создан!")
+    else:
+        return HttpResponse("Суперпользователь уже существует.")
+    
