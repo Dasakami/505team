@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}{{ member.name }} - Команда 505{% endblock %}
 {% block seo %}
     <meta name="description" content="{{ member.name }} — {{ member.position }} в Команде 505. Опыт {{ member.experience_years }} {{ member.experience_years|pluralize:"год,года,лет" }}. {{ member.bio|truncatechars:150 }}">
