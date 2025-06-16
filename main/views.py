@@ -56,3 +56,11 @@ def run_collectstatic(request):
 
 def yandex(request):
     return render(request, 'main/yandex_27aa4734362aa5ed.html')
+
+def page_not_found(request, exception):
+    return render(request, '404.html', status=404)
+
+def server_error(request):
+    return render(request, '500.html', status=500)
+
+

@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404, handler500
+
+handler404 = 'main.views.page_not_found'
+handler500 = 'main.views.server_error'
 
 from django.views.static import serve
 urlpatterns = [
@@ -14,6 +18,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('reviews/', include('reviews.urls')),
     path('fun/', include('fun.urls')),
+
 ]
 
 if settings.DEBUG:

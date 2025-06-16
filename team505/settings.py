@@ -69,27 +69,27 @@ WSGI_APPLICATION = 'team505.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': '505',  # Имя базы данных (Render)
-#         'USER': 'postgres',  # Имя пользователя (Render)
-#         'PASSWORD': '1908',  # Пароль (Render)
-#         'HOST': 'localhost',  # Хост (Render)
-#         'PORT': '5432',  # Порт (Render)
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'team505',  # Имя базы данных (Render)
-        'USER': 'team505',  # Имя пользователя (Render)
-        'PASSWORD': 'BLREi6ay50JVHDvrGFRrophXrl8FUysr',  # Пароль (Render)
-        'HOST': 'dpg-d1766cfdiees73dr8730-a',  # Хост (Render)
+        'NAME': '505',  # Имя базы данных (Render)
+        'USER': 'postgres',  # Имя пользователя (Render)
+        'PASSWORD': '1908',  # Пароль (Render)
+        'HOST': 'localhost',  # Хост (Render)
         'PORT': '5432',  # Порт (Render)
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'team505',  # Имя базы данных (Render)
+#         'USER': 'team505',  # Имя пользователя (Render)
+#         'PASSWORD': 'BLREi6ay50JVHDvrGFRrophXrl8FUysr',  # Пароль (Render)
+#         'HOST': 'dpg-d1766cfdiees73dr8730-a',  # Хост (Render)
+#         'PORT': '5432',  # Порт (Render)
+#     }
+# }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
