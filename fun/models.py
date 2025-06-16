@@ -1,5 +1,5 @@
 from django.db import models
-
+from cloudinary_storage.storage import MediaCloudinaryStorage, VideoMediaCloudinaryStorage
 class FunContent(models.Model):
     CONTENT_TYPES = [
         ('image', 'Изображение'),
@@ -12,8 +12,8 @@ class FunContent(models.Model):
     content_type = models.CharField(max_length=10, choices=CONTENT_TYPES, verbose_name='Тип контента')
     
     # Медиа файлы
-    image = models.ImageField(upload_to='fun/images/', verbose_name='Изображение', blank=True)
-    video = models.FileField(upload_to='fun/videos/', verbose_name='Видео файл', blank=True)
+    image = models.ImageField(upload_to='fun/images/', verbose_name='Изображение', blank=True, storage=MediaCloudinaryStorage)
+    video = models.FileField(upload_to='fun/videos/', verbose_name='Видео файл', blank=True, storage=VideoMediaCloudinaryStorage)
     video_url = models.URLField(verbose_name='Ссылка на видео', blank=True)
     
     # Дополнительные поля
