@@ -12,6 +12,7 @@ urlpatterns = [
     path("create-superuser/", views.create_superuser),
     path('run/', views.run_collectstatic ),
     path('contact/', views.contact, name='contact'),
+    path('yandex_27aa4734362aa5ed/', views.yandex, name='yandex_27aa4734362aa5ed')
 ]
 
 if settings.DEBUG :

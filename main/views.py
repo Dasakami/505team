@@ -53,3 +53,6 @@ def create_superuser(request):
 def run_collectstatic(request):
     call_command('collectstatic', interactive=False, clear=True)
     return HttpResponse("Collectstatic выполнен!")
+
+def yandex(request):
+    return render(request, 'main/yandex_27aa4734362aa5ed.html')
