@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'team505.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'team505',  # Имя базы данных (Render)
-        'USER': 'team505',  # Имя пользователя (Render)
-        'PASSWORD': 'BLREi6ay50JVHDvrGFRrophXrl8FUysr',  # Пароль (Render)
-        'HOST': 'dpg-d1766cfdiees73dr8730-a',  # Хост (Render)
+        'NAME': 't505eam',  # Имя базы данных (Render)
+        'USER': 'tim',  # Имя пользователя (Render)
+        'PASSWORD': '2HXkv5a7BalF0O6H2fqOe8TzViATt61i',  # Пароль (Render)
+        'HOST': 'dpg-d1tjc43ipnbc73ccufqg-a',  # Хост (Render)
         'PORT': '5432',  # Порт (Render)
     }
 }
