@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Service, Testimonial, ContactMessage, TeamMember, BlogPost
+from .models import Service, Testimonial, TeamMember, BlogPost
 from .forms import ContactForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.core.management import call_command
-from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 
 def home(request):
@@ -43,18 +42,6 @@ def contact(request):
     
     services = Service.objects.filter(is_active=True)
     return render(request, 'main/contact.html', {'form': form, 'services': services})
-
-def create_superuser(request):
-    if not User.objects.filter(username="Dasakami").exists():
-        User.objects.create_superuser("Dasakami", "dendasakami@gmail.com", "h72ivh-19")
-        return HttpResponse("Суперпользователь создан!")
-    else:
-        return HttpResponse("Суперпользователь уже существует.")
-    
-
-def run_collectstatic(request):
-    call_command('collectstatic', interactive=False, clear=True)
-    return HttpResponse("Collectstatic выполнен!")
 
 def yandex(request):
     return render(request, 'main/yandex_27aa4734362aa5ed.html')

@@ -15,6 +15,7 @@ urlpatterns = [
     path('portfolio/', include('portfolio.urls')),
     path('reviews/', include('reviews.urls')),
     path('fun/', include('fun.urls')),
+    path('api/', include('main.api_urls'))
 
 ]
 
