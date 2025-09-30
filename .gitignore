@@ -18,3 +18,6 @@ main/templates/404.html
 main/templates/500.html
 main/templates/robots.txt
 main/templates/main/yandex_27aa4734362aa5ed.html
+templates/base.html
+fun/templates/fun/
+reviews/templates/reviews/

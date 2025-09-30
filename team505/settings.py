@@ -24,9 +24,7 @@ INSTALLED_APPS = [
     'crispy_tailwind',
     'main',
     'portfolio',
-    'team',
     'cloudinary_storage',
-    'blog',
     'reviews',
     'fun'
 ]

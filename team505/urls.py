@@ -13,7 +13,6 @@ urlpatterns = [
     path('sancho/', admin.site.urls),
     path('', include('main.urls')),
     path('portfolio/', include('portfolio.urls')),
-    path('blog/', include('blog.urls')),
     path('reviews/', include('reviews.urls')),
     path('fun/', include('fun.urls')),
 
