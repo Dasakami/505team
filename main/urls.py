@@ -24,6 +24,10 @@ urlpatterns = [
     path('yandex_27aa4734362aa5ed.html/', views.yandex, name='yandex_27aa4734362aa5ed'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('team/', views.team, name='team'),
+    path('team/<slug:slug>/', views.member_detail, name='member_detail'),
+    path('blog/', views.blog, name='blog'),
+    path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
 ]
 
 if settings.DEBUG :

@@ -1,18 +1,17 @@
 import os
 from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-your-secret-key-here'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+DEBUG = os.getenv("DEBUG") == "True"
 
-# Application definition
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+# CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+# CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(',')
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,29 +69,29 @@ WSGI_APPLICATION = 'team505.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': '505',  # Имя базы данных (Render)
-#         'USER': 'postgres',  # Имя пользователя (Render)
-#         'PASSWORD': '1908',  # Пароль (Render)
-#         'HOST': 'localhost',  # Хост (Render)
-#         'PORT': '5432',  # Порт (Render)
-#     }
-# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 't505eam',  # Имя базы данных (Render)
-        'USER': 'tim',  # Имя пользователя (Render)
-        'PASSWORD': '2HXkv5a7BalF0O6H2fqOe8TzViATt61i',  # Пароль (Render)
-        'HOST': 'dpg-d1tjc43ipnbc73ccufqg-a',  # Хост (Render)
-        'PORT': '5432',  # Порт (Render)
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
 
-# Password validation
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 't505eam',  # Имя базы данных (Render)
+#         'USER': 'tim',  # Имя пользователя (Render)
+#         'PASSWORD': '2HXkv5a7BalF0O6H2fqOe8TzViATt61i',  # Пароль (Render)
+#         'HOST': 'dpg-d1tjc43ipnbc73ccufqg-a',  # Хост (Render)
+#         'PORT': '5432',  # Порт (Render)
+#     }
+# }
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -108,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -126,9 +125,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'A271rHvOdWxMmOwMLDkTXagm3OE',
 }
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
- # это куда Django будет копировать статику
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 if DEBUG:
@@ -140,10 +137,9 @@ else:
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# Default primary key field type
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"

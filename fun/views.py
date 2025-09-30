@@ -4,7 +4,6 @@ from django.http import JsonResponse
 from .models import FunContent
 
 def fun_list(request):
-    """Список смешного контента"""
     content_type = request.GET.get('type', 'all')
     
     if content_type == 'all':
@@ -22,7 +21,6 @@ def fun_list(request):
     })
 
 def fun_detail_json(request, pk):
-    """AJAX: данные для модального окна"""
     content = get_object_or_404(FunContent, pk=pk)
     content.increment_views()
 
@@ -38,7 +36,6 @@ def fun_detail_json(request, pk):
     })
 
 def like_content(request, pk):
-    """AJAX лайк"""
     if request.method == 'POST':
         content = get_object_or_404(FunContent, pk=pk)
         content.likes_count += 1

@@ -11,12 +11,10 @@ class FunContent(models.Model):
     description = models.TextField(verbose_name='Описание', blank=True)
     content_type = models.CharField(max_length=10, choices=CONTENT_TYPES, verbose_name='Тип контента')
     
-    # Медиа файлы
     image = models.ImageField(upload_to='fun/images/', verbose_name='Изображение', blank=True, storage=MediaCloudinaryStorage)
     video = models.FileField(upload_to='fun/videos/', verbose_name='Видео файл', blank=True, storage=VideoMediaCloudinaryStorage)
     video_url = models.URLField(verbose_name='Ссылка на видео', blank=True)
     
-    # Дополнительные поля
     is_featured = models.BooleanField(default=False, verbose_name='Рекомендуемое')
     views_count = models.PositiveIntegerField(default=0, verbose_name='Количество просмотров')
     likes_count = models.PositiveIntegerField(default=0, verbose_name='Лайки')

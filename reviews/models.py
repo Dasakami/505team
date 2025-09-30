@@ -22,11 +22,9 @@ class Review(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок отзыва')
     text = models.TextField(verbose_name='Текст отзыва')
     
-    # Дополнительные поля
     service_used = models.CharField(max_length=200, verbose_name='Какую услугу использовали', blank=True)
     would_recommend = models.BooleanField(default=True, verbose_name='Рекомендуете ли нас?')
-    
-    # Модерация
+
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending', verbose_name='Статус')
     admin_comment = models.TextField(verbose_name='Комментарий администратора', blank=True)
     

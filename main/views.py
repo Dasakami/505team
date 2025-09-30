@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Service, Testimonial, ContactMessage
+from .models import Service, Testimonial, ContactMessage, TeamMember, BlogPost
 from .forms import ContactForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.core.management import call_command
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 
 def home(request):
     services = Service.objects.filter(is_active=True)[:6]
@@ -64,3 +66,30 @@ def server_error(request):
     return render(request, '500.html', status=500)
 
 
+
+
+def team(request):
+    members = TeamMember.objects.filter(is_active=True)
+    return render(request, 'team/team.html', {'members': members})
+
+def member_detail(request, slug):
+    member = get_object_or_404(TeamMember, slug=slug, is_active=True)
+    return render(request, 'team/member_detail.html', {'member': member})
+
+
+def blog(request):
+    posts = BlogPost.objects.filter(is_published=True)
+    paginator = Paginator(posts, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'blog/blog.html', {'page_obj': page_obj})
+
+def blog_detail(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
+    related_posts = BlogPost.objects.filter(is_published=True).exclude(id=post.id)[:3]
+    
+    return render(request, 'blog/detail.html', {
+        'post': post,
+        'related_posts': related_posts
+    })
