@@ -1,28 +1,40 @@
-from django.shortcuts import render, get_object_or_404
+from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import PortfolioItem, PortfolioCategory
+from .serializers import PortfolioItemSerializer, PortfolioCategorySerializer
 
-def portfolio(request):
-    category_slug = request.GET.get('category')
-    categories = PortfolioCategory.objects.all()
-    
-    if category_slug:
-        category = get_object_or_404(PortfolioCategory, slug=category_slug)
-        items = PortfolioItem.objects.filter(category=category)
-    else:
-        items = PortfolioItem.objects.all()
-        category = None
-    
-    return render(request, 'portfolio/portfolio.html', {
-        'items': items,
-        'categories': categories,
-        'active_category': category
-    })
 
-def portfolio_detail(request, item_id):
-    item = get_object_or_404(PortfolioItem, id=item_id)
-    related_items = PortfolioItem.objects.filter(category=item.category).exclude(id=item.id)[:3]
+class PortfolioCategoryListAPIView(generics.ListAPIView):
+    queryset = PortfolioCategory.objects.all()
+    serializer_class = PortfolioCategorySerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class PortfolioItemListAPIView(generics.ListAPIView):
+    queryset = PortfolioItem.objects.all()
+    serializer_class = PortfolioItemSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'is_featured', 'media_type']
     
-    return render(request, 'portfolio/detail.html', {
-        'item': item,
-        'related_items': related_items
-    })
+    def get_queryset(self):
+        queryset = PortfolioItem.objects.all()
+        category_slug = self.request.query_params.get('category', None)
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+        return queryset
+
+
+class PortfolioItemDetailAPIView(generics.RetrieveAPIView):
+    queryset = PortfolioItem.objects.all()
+    serializer_class = PortfolioItemSerializer
+    permission_classes = [permissions.AllowAny]
+    lookup_field = 'id'
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        item = self.get_object()
+        context['related_items'] = PortfolioItem.objects.filter(
+            category=item.category
+        ).exclude(id=item.id)[:3]
+        return context

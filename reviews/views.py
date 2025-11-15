@@ -1,27 +1,33 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.core.paginator import Paginator
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Review
-from .forms import ReviewForm
+from .serializers import ReviewSerializer, ReviewCreateSerializer
 
-def reviews_list(request):
-    """Список одобренных отзывов"""
-    reviews = Review.objects.filter(status='approved').order_by('-created_at')
-    paginator = Paginator(reviews, 9)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    
-    return render(request, 'reviews/reviews_list.html', {'page_obj': page_obj})
 
-def add_review(request):
-    """Добавление нового отзыва"""
-    if request.method == 'POST':
-        form = ReviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            review = form.save()
-            messages.success(request, 'Спасибо за ваш отзыв! Он будет опубликован после модерации.')
-            return redirect('reviews_list')
-    else:
-        form = ReviewForm()
+class ReviewListAPIView(generics.ListAPIView):
+    queryset = Review.objects.filter(status='approved').order_by('-created_at')
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['rating', 'would_recommend']
+
+
+class ReviewCreateAPIView(generics.CreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewCreateSerializer
+    permission_classes = [permissions.AllowAny]
     
-    return render(request, 'reviews/add_review.html', {'form': form})
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            {
+                'message': 'Спасибо за ваш отзыв! Он будет опубликован после модерации.',
+                'data': serializer.data
+            },
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )

@@ -1,82 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Service, Testimonial, TeamMember, BlogPost
-from .forms import ContactForm
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.core.management import call_command
-from django.core.paginator import Paginator
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status, permissions
 
-def home(request):
-    services = Service.objects.filter(is_active=True)[:6]
-    testimonials = Testimonial.objects.filter(is_active=True)[:3]
-    return render(request, 'main/home.html', {
-        'services': services,
-        'testimonials': testimonials
-    })
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def page_not_found(request, exception=None):
+    return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-def about(request):
-    return render(request, 'main/about.html')
-
-def services(request):
-    services = Service.objects.filter(is_active=True)
-    return render(request, 'main/services.html', {'services': services})
-
-def service_detail(request, service_id):
-    service = Service.objects.get(id=service_id, is_active=True)
-    return render(request, 'main/service_detail.html', {'service': service})
-
-def testimonials(request):
-    testimonials = Testimonial.objects.filter(is_active=True)
-    return render(request, 'main/testimonials.html', {'testimonials': testimonials})
-
-def contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.')
-            return redirect('contact')
-    else:
-        form = ContactForm()
-    
-    services = Service.objects.filter(is_active=True)
-    return render(request, 'main/contact.html', {'form': form, 'services': services})
-
-def yandex(request):
-    return render(request, 'main/yandex_27aa4734362aa5ed.html')
-
-def page_not_found(request, exception):
-    return render(request, '404.html', status=404)
-
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
 def server_error(request):
-    return render(request, '500.html', status=500)
-
-
-
-
-def team(request):
-    members = TeamMember.objects.filter(is_active=True)
-    return render(request, 'team/team.html', {'members': members})
-
-def member_detail(request, slug):
-    member = get_object_or_404(TeamMember, slug=slug, is_active=True)
-    return render(request, 'team/member_detail.html', {'member': member})
-
-
-def blog(request):
-    posts = BlogPost.objects.filter(is_published=True)
-    paginator = Paginator(posts, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    
-    return render(request, 'blog/blog.html', {'page_obj': page_obj})
-
-def blog_detail(request, slug):
-    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
-    related_posts = BlogPost.objects.filter(is_published=True).exclude(id=post.id)[:3]
-    
-    return render(request, 'blog/detail.html', {
-        'post': post,
-        'related_posts': related_posts
-    })
+    return Response({'error': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

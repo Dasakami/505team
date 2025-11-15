@@ -1,32 +1,22 @@
 from django.urls import path
-from . import views
-from django.conf.urls.static import static 
-from django.conf import settings
-from django.views.generic import TemplateView
-from django.conf.urls.static import static 
-from .sitemaps import StaticViewSitemap
-from django.contrib.sitemaps.views import sitemap
-
-sitemaps = {
-    'static': StaticViewSitemap(),
-}
-
+from .api_views import (
+    ContactMessageView,
+    TeamMemberListView,
+    TeamMemberDetailView,
+    BlogPostListAPIView,
+    BlogPostDetailAPIView,
+    ServiceListAPIView,
+    ServiceDetailAPIView,
+    TestimonialListAPIView,
+)
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('about/', views.about, name='about'),
-    path('services/', views.services, name='services'),
-    path('services/<int:service_id>/', views.service_detail, name='service_detail'),
-    path('testimonials/', views.testimonials, name='testimonials'),
-    path('contact/', views.contact, name='contact'),
-    path('yandex_27aa4734362aa5ed.html/', views.yandex, name='yandex_27aa4734362aa5ed'),
-    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
-    path('team/', views.team, name='team'),
-    path('team/<slug:slug>/', views.member_detail, name='member_detail'),
-    path('blog/', views.blog, name='blog'),
-    path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
+    path('contact/', ContactMessageView.as_view(), name='contact-message'),
+    path('team/', TeamMemberListView.as_view(), name='team-list'),
+    path('team/<slug:slug>/', TeamMemberDetailView.as_view(), name='team-detail'),
+    path('blog/', BlogPostListAPIView.as_view(), name='blog-list'),
+    path('blog/<slug:slug>/', BlogPostDetailAPIView.as_view(), name='blog-detail'),
+    path('services/', ServiceListAPIView.as_view(), name='service-list'),
+    path('services/<int:id>/', ServiceDetailAPIView.as_view(), name='service-detail'),
+    path('testimonials/', TestimonialListAPIView.as_view(), name='testimonial-list'),
 ]
-
-if settings.DEBUG :
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from .views import FunContentListAPIView, FunContentDetailAPIView, like_content
 
 urlpatterns = [
-    path('', views.fun_list, name='fun_list'),
-    path('<int:pk>/json/', views.fun_detail_json, name='fun_detail_json'),
-    path('<int:pk>/like/', views.like_content, name='like_content'),
+    path('', FunContentListAPIView.as_view(), name='fun-list'),
+    path('<int:pk>/', FunContentDetailAPIView.as_view(), name='fun-detail'),
+    path('<int:pk>/like/', like_content, name='fun-like'),
 ]

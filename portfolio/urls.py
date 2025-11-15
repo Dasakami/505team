@@ -1,7 +1,12 @@
 from django.urls import path
-from . import views
+from .views import (
+    PortfolioCategoryListAPIView,
+    PortfolioItemListAPIView,
+    PortfolioItemDetailAPIView
+)
 
 urlpatterns = [
-    path('', views.portfolio, name='portfolio'),
-    path('<int:item_id>/', views.portfolio_detail, name='portfolio_detail'),
+    path('categories/', PortfolioCategoryListAPIView.as_view(), name='portfolio-categories'),
+    path('', PortfolioItemListAPIView.as_view(), name='portfolio-list'),
+    path('<int:id>/', PortfolioItemDetailAPIView.as_view(), name='portfolio-detail'),
 ]
